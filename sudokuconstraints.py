@@ -1,0 +1,33 @@
+
+from typing import List
+
+import sudokumain
+import sudokuboard
+import sudokuutils
+
+
+class SudokuConstraints:
+
+    def __init__(self, constraints: str = 'standard'):
+        self._constraints = self._init_constraints(constraints=constraints)
+
+    def _init_constraints(self, constraints: str) -> List:
+        if constraints == 'standard':
+            return ['row', 'column', 'box']
+
+    def check_sudoku(self, board: sudokuboard.SudokuBoard) -> bool:
+        def check_unit(unit: List) -> bool:
+            unit = [entry for entry in unit if entry > 0]
+            if len(unit) > len(set(unit)):
+                return False
+            return True
+        for constraint in self._constraints:
+            for i in range(0, 9):
+                ac_unit = board.get_unit(unit=constraint, num=i)
+                result = check_unit(unit=ac_unit)
+                if not result:
+                    return False
+        return True
+
+
+
