@@ -56,6 +56,7 @@ if __name__ == "__main__":
     print(main_sudoku.sudoku.get_number_of_empty_cells())
     solver = solver.backtracking.BackTracking(main_sudoku.sudoku)
     solver.run()
+    solver.solution.print_sudoku()
 
 
 

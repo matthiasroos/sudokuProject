@@ -22,6 +22,11 @@ class SudokuBoard:
                     empty_cells = empty_cells + 1
         return empty_cells
 
+    def is_complete(self) -> bool:
+        if self.get_number_of_empty_cells() == 0:
+            return True
+        return False
+
     def enter_number(self, pos_row: int, pos_column: int, number: int):
         self.board[pos_row][pos_column] = number
 
