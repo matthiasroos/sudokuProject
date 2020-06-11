@@ -50,15 +50,14 @@ if __name__ == "__main__":
     # sudoku.print_sudoku()
     # solver.sudoku.print_sudoku()
     # main_sudoku.candidates.find_candidates()
-    # main_sudoku.sudoku.enter_number(pos_row=1, pos_column=0, number=6)
+    # main_sudoku.sudoku.enter_number(pos_row=0, pos_column=0, number=3)
+    # print(main_sudoku.check_sudoku())
     # main_sudoku.candidates.update_candidates(pos_row=1, pos_column=0, delete_num=6)
     # print(main_sudoku.candidates)
     main_sudoku.sudoku.print_sudoku()
     print(main_sudoku.sudoku.get_number_of_empty_cells())
     solver = solver.backtracking2.BackTracking2(main_sudoku.sudoku)
     solver.run()
-    solver.solution.print_sudoku()
-
 
 
 

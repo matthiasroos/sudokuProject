@@ -19,6 +19,7 @@ class BackTracking:
     def run(self):
         solution_vector = []
         self.backtracking(solution_vector=solution_vector)
+        self.solution.print_sudoku()
 
     def backtracking(self, solution_vector: List):
         if self._reject(solution_vector):
