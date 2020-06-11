@@ -32,13 +32,11 @@ class BackTracking:
             future_solution = self._next(solution_vector=solution_vector)
 
     def _reject(self, solution_vector: List) -> bool:
-        board = self._insert_solution_vector_into_board(solution_vector=solution_vector)
-        if self.constraints.check_sudoku(board=board):
-            return False
-        return True
+        board = self.insert_solution_vector_into_board(solution_vector=solution_vector)
+        return not self.constraints.check_sudoku(board=board)
 
     def _accept(self, solution_vector: List) -> bool:
-        board = self._insert_solution_vector_into_board(solution_vector=solution_vector)
+        board = self.insert_solution_vector_into_board(solution_vector=solution_vector)
         if board.is_complete():
             return True
         return False
@@ -59,10 +57,10 @@ class BackTracking:
         return None
 
     def _output(self, solution_vector: List):
-        self.solution = self._insert_solution_vector_into_board(solution_vector=solution_vector)
+        self.solution = self.insert_solution_vector_into_board(solution_vector=solution_vector)
         self._solved = True
 
-    def _insert_solution_vector_into_board(self, solution_vector: List) -> sudokuboard.SudokuBoard:
+    def insert_solution_vector_into_board(self, solution_vector: List) -> sudokuboard.SudokuBoard:
         board_new = copy.deepcopy(self.board)
         generator_vector = (entry for entry in solution_vector)
         for index_row in range(0, 9):
