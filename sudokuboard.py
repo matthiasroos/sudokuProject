@@ -1,4 +1,5 @@
 
+import copy
 from typing import Iterable, List, Set, Tuple
 
 import sudokuutils
@@ -93,3 +94,17 @@ class SudokuBoard:
     def print_sudoku(self):
         for row_index in range(0, 9):
             print(self.board[row_index])
+
+
+def insert_solution_vector_into_board(solution_vector: List, board: SudokuBoard):
+    board_new = copy.deepcopy(board)
+    generator_vector = (entry for entry in solution_vector)
+    for index_row in range(0, 9):
+        for index_column in range(0, 9):
+            if board_new.board[index_row][index_column] == 0:
+                try:
+                    next_number = next(generator_vector)
+                    board_new.enter_number(pos_row=index_row, pos_column=index_column, number=next_number)
+                except StopIteration:
+                    return board_new
+    return board_new
