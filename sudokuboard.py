@@ -39,8 +39,8 @@ class SudokuBoard:
     def _get_box(self, box_num: int) -> List[int]:
         (start_row, end_row), (start_column, end_column) = sudokuutils.get_box_dimensions(box_num=box_num)
         box = []
-        for row_index in range(start_row, end_row):
-            for column_index in range(start_column, end_column):
+        for row_index in range(start_row, end_row+1):
+            for column_index in range(start_column, end_column+1):
                 box.append(self.board[row_index][column_index])
         return box
 
@@ -48,8 +48,8 @@ class SudokuBoard:
         (start_row, end_row), (start_column, end_column) = sudokuutils.get_box_dimensions2(pos_row=pos_row,
                                                                                            pos_column=pos_column)
         box = []
-        for row_index in range(start_row, end_row):
-            for column_index in range(start_column, end_column):
+        for row_index in range(start_row, end_row+1):
+            for column_index in range(start_column, end_column+1):
                 box.append(self.board[row_index][column_index])
         return box
 
