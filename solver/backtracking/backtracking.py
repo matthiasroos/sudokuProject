@@ -7,10 +7,6 @@ import sudokuboard
 
 class BackTracking(solver.backtracking.backtrackingabstract.BackTrackingAbstract):
 
-    def __init__(self, board: sudokuboard.SudokuBoard):
-        super().__init__(board=board)
-        self._solved = False
-
     def backtracking(self, step: int, solution_vector: List) -> bool:
         if self._reject(solution_vector):
             return False
@@ -35,14 +31,10 @@ class BackTracking(solver.backtracking.backtrackingabstract.BackTrackingAbstract
         return False
 
     def _first(self, solution_vector: List) -> Optional[List]:
-        if not self._solved:
-            solution_vector.append(1)
-            return solution_vector
-        return None
+        solution_vector.append(1)
+        return solution_vector
 
     def _next(self, solution_vector: List) -> Optional[List]:
-        if self._solved:
-            return None
         last_element = solution_vector.pop(-1)
         if last_element < 9:
             solution_vector.append(last_element + 1)
@@ -51,7 +43,7 @@ class BackTracking(solver.backtracking.backtrackingabstract.BackTrackingAbstract
 
     def _output(self, solution_vector: List):
         self.solution = sudokuboard.insert_solution_vector_into_board(solution_vector=solution_vector, board=self.board)
-        self._solved = True
+
 
 
 
