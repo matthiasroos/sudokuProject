@@ -1,9 +1,7 @@
 
 from typing import List
 
-import sudokumain
 import sudokuboard
-import sudokuutils
 
 
 class SudokuConstraints:
