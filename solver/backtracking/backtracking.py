@@ -1,33 +1,27 @@
 
 from typing import List, Optional, Tuple
 
+import solver.backtracking.backtrackingabstract
 import sudokuboard
-import sudokuconstraints
 
 
-class BackTracking:
+class BackTracking(solver.backtracking.backtrackingabstract.BackTrackingAbstract):
 
     def __init__(self, board: sudokuboard.SudokuBoard):
-        self.board = board
-        self.constraints = sudokuconstraints.SudokuConstraints()
-        self.solution = None
+        super().__init__(board=board)
         self._solved = False
-        self.max_trial_entries = self.board.get_number_of_empty_cells()
 
-    def run(self):
-        solution_vector = []
-        self.backtracking(solution_vector=solution_vector)
-        self.solution.print_sudoku()
-
-    def backtracking(self, solution_vector: List):
+    def backtracking(self, step: int, solution_vector: List) -> bool:
         if self._reject(solution_vector):
-            return None
+            return False
         if self._accept(solution_vector):
             self._output(solution_vector=solution_vector)
+            return True
         future_solution = self._first(solution_vector=solution_vector)
         while future_solution:
             print(future_solution)
-            self.backtracking(solution_vector=future_solution)
+            if self.backtracking(step=step + 1, solution_vector=future_solution):
+                return True
             future_solution = self._next(solution_vector=solution_vector)
 
     def _reject(self, solution_vector: List) -> bool:

@@ -1,12 +1,8 @@
-
-from typing import Iterable, List, Set, Tuple
-
 import sudokuboard
 import sudokucandidates
 import sudokuconstraints
-import sudokuutils
-import solver.backtracking
-import solver.backtracking2
+import solver.backtracking.backtracking
+import solver.backtracking.backtracking2
 
 
 
@@ -56,7 +52,7 @@ if __name__ == "__main__":
     # print(main_sudoku.candidates)
     main_sudoku.sudoku.print_sudoku()
     print(main_sudoku.sudoku.get_number_of_empty_cells())
-    solver = solver.backtracking2.BackTracking2(main_sudoku.sudoku)
+    solver = solver.backtracking.backtracking.BackTracking(main_sudoku.sudoku)
     solver.run()
 
 
