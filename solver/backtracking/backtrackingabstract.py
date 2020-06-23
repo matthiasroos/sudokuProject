@@ -1,11 +1,12 @@
 
+import abc
 from typing import List
 
 import sudokuboard
 import sudokuconstraints
 
 
-class BackTrackingAbstract:
+class BackTrackingAbstract(metaclass=abc.ABCMeta):
 
     def __init__(self, board: sudokuboard.SudokuBoard):
         self.board = board
@@ -19,6 +20,7 @@ class BackTrackingAbstract:
         if status:
             self.solution.print_sudoku()
 
+    @abc.abstractmethod
     def backtracking(self, step: int, solution_vector: List) -> bool:
         pass
 

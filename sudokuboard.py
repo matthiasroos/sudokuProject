@@ -10,7 +10,8 @@ class SudokuBoard:
     def __init__(self, constraints: List[str] = None):
         self.board = self._init_board()
 
-    def _init_board(self) -> List[List[int]]:
+    @staticmethod
+    def _init_board() -> List[List[int]]:
         row = [0 for _ in range(0, 9)]
         board = [row.copy() for _ in range(0, 9)]
         return board

@@ -9,6 +9,7 @@ class SudokuConstraints:
     def __init__(self, constraints: str = 'standard'):
         self._constraints = self._init_constraints(constraints=constraints)
 
+    @staticmethod
     def _init_constraints(self, constraints: str) -> List:
         if constraints == 'standard':
             return ['row', 'column', 'box']
