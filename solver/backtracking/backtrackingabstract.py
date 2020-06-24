@@ -8,11 +8,16 @@ import sudokuconstraints
 
 class BackTrackingAbstract(metaclass=abc.ABCMeta):
 
-    def __init__(self, board: sudokuboard.SudokuBoard):
+    def __init__(self, board: sudokuboard.SudokuBoard, constraints: sudokuconstraints.SudokuConstraints = None):
         self.board = board
-        self.constraints = sudokuconstraints.SudokuConstraints()
+
         self.solution = None
         self.max_trial_entries = self.board.get_number_of_empty_cells()
+        
+        if constraints is None:
+            self.constraints = sudokuconstraints.SudokuConstraints()
+        else:
+            self.constraints = constraints
 
     def run(self):
         solution_vector = []
