@@ -85,7 +85,8 @@ def test_integrationtest_naked_singles(mock_sudoku_load):
     sys.stdout = capturedOutput
     sudoku_strategy = strategies.naked_singles.NakedSingles(sudoku=mock_sudoku_load.sudoku,
                                                             candidates=mock_sudoku_load.candidates,
-                                                            constraints=mock_sudoku_load.constraints)
+                                                            constraints=mock_sudoku_load.constraints,
+                                                            unit='box')
     sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Naked Single found in box 0\n' \
@@ -99,7 +100,8 @@ def test_integrationtest_hidden_singles(mock_sudoku_load):
     sys.stdout = capturedOutput
     sudoku_strategy = strategies.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
                                                               candidates=mock_sudoku_load.candidates,
-                                                              constraints=mock_sudoku_load.constraints)
+                                                              constraints=mock_sudoku_load.constraints,
+                                                              unit='box')
     sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Hidden Single 6 found in box 4\n' \
