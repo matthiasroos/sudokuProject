@@ -9,14 +9,12 @@ import solver.backtracking.backtracking2
 
 
 
-
-
 class SudokuMain:
 
     def __init__(self, file_name):
         self.sudoku = sudokuboard.SudokuBoard()
         self.sudoku.read_sudoku(file=file_name)
-        self.candidates = sudokucandidates.SudokuCandidates()
+        self.candidates = sudokucandidates.SudokuCandidates(sudoku=self.sudoku)
         self.constraints = sudokuconstraints.SudokuConstraints()
 
     def input_number(self, pos_row: int, pos_column: int, number: int):
