@@ -7,6 +7,8 @@ import pytest
 
 import solver.backtracking.backtracking
 import solver.backtracking.backtracking2
+import strategies.hidden_singles
+import strategies.naked_singles
 import sudokumain
 
 SUDOKU = '7,9,0,0,3,8,0,0,1\n\
@@ -37,7 +39,13 @@ def mock_sudoku_main():
     return mock_main
 
 
-def test_smoketest_print_sudoku(mock_sudoku_main):
+@pytest.fixture
+def mock_sudoku_load(request):
+    mock_main = sudokumain.SudokuMain(file_name='strategies/examples/{}'.format(request.param['file_name']))
+    return mock_main
+
+
+def test_integrationtest_print_sudoku(mock_sudoku_main):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
     mock_sudoku_main.sudoku.print_sudoku()
@@ -53,7 +61,7 @@ def test_smoketest_print_sudoku(mock_sudoku_main):
                                         "[9, 0, 0, 2, 4, 0, 0, 1, 5]\n"
 
 
-def test_smoketest_backtracking(mock_sudoku_main):
+def test_integrationtest_backtracking(mock_sudoku_main):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
     sudoku_solver = solver.backtracking.backtracking.BackTracking(board=mock_sudoku_main.sudoku)
@@ -62,10 +70,38 @@ def test_smoketest_backtracking(mock_sudoku_main):
     assert sudoku_solver.solution.board == SOLUTION
 
 
-def test_smoketest_backtracking2(mock_sudoku_main):
+def test_integrationtest_backtracking2(mock_sudoku_main):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
     sudoku_solver = solver.backtracking.backtracking2.BackTracking2(board=mock_sudoku_main.sudoku)
     sudoku_solver.run()
     sys.stdout = sys.__stdout__
     assert sudoku_solver.solution.board == SOLUTION
+
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='naked_singles.txt')], indirect=True)
+def test_integrationtest_naked_singles(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.naked_singles.NakedSingles(sudoku=mock_sudoku_load.sudoku,
+                                                            candidates=mock_sudoku_load.candidates,
+                                                            constraints=mock_sudoku_load.constraints)
+    sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Naked Single found in box 0\n' \
+                                        'Naked Single found in box 3\n' \
+                                        'Naked Single found in box 6\n'
+
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_singles.txt')], indirect=True)
+def test_integrationtest_hidden_singles(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
+                                                              candidates=mock_sudoku_load.candidates,
+                                                              constraints=mock_sudoku_load.constraints)
+    sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Hidden Single 6 found in box 4\n' \
+                                        'Hidden Single 7 found in box 8\n'
+
