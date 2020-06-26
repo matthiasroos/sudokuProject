@@ -24,3 +24,21 @@ def get_box_dimensions2(pos_row: int, pos_column: int) -> Tuple[Tuple[int, int],
     start_column = pos_column - pos_column % 3
     end_column = start_column + 3
     return (start_row, end_row), (start_column, end_column)
+
+
+def get_pos_from_unit_nr(unit: str, unit_nr: int, cell_nr: int) -> Tuple[int, int]:
+    """
+    Return the position depending on the unit
+    :param unit: type of unit 'row', 'column', 'box'
+    :param unit_nr: first iterator (over the units)
+    :param cell_nr: second iterator (over the cells in one unit)
+    :return: tuple of pos_row and pos_column
+    """
+    if unit == 'row':
+        return unit_nr, cell_nr
+    if unit == 'column':
+        return cell_nr, unit_nr
+    if unit == 'box':
+        pos_row = (unit_nr // 3) * 3 + cell_nr // 3
+        pos_column = (unit_nr % 3) * 3 + cell_nr % 3
+        return pos_row, pos_column

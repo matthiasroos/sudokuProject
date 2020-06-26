@@ -87,11 +87,12 @@ def test_integrationtest_naked_singles(mock_sudoku_load):
                                                             candidates=mock_sudoku_load.candidates,
                                                             constraints=mock_sudoku_load.constraints,
                                                             unit='box')
-    sudoku_strategy.detect()
+    output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
-    assert capturedOutput.getvalue() == 'Naked Single found in box 0\n' \
-                                        'Naked Single found in box 3\n' \
-                                        'Naked Single found in box 6\n'
+    assert capturedOutput.getvalue() == 'Naked Single 8 found in box 0\n' \
+                                        'Naked Single 7 found in box 3\n' \
+                                        'Naked Single 3 found in box 6\n'
+    assert output_found == [{8: (0, 0)}, {7: (5, 2)}, {3: (6, 1)}]
 
 
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_singles.txt')], indirect=True)
@@ -102,10 +103,11 @@ def test_integrationtest_hidden_singles_box(mock_sudoku_load):
                                                               candidates=mock_sudoku_load.candidates,
                                                               constraints=mock_sudoku_load.constraints,
                                                               unit='box')
-    sudoku_strategy.detect()
+    output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Hidden Single 6 found in box 4\n' \
                                         'Hidden Single 7 found in box 8\n'
+    assert output_found == [{6: (4, 3)}, {7: (6, 8)}]
 
 
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_singles.txt')], indirect=True)
@@ -116,6 +118,7 @@ def test_integrationtest_hidden_singles_column(mock_sudoku_load):
                                                               candidates=mock_sudoku_load.candidates,
                                                               constraints=mock_sudoku_load.constraints,
                                                               unit='column')
-    sudoku_strategy.detect()
+    output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Hidden Single 6 found in column 3\n'
+    assert output_found == [{6: (4, 3)}]

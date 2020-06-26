@@ -33,3 +33,15 @@ def test_get_box_dimension(box_num, expected_row, expected_column):
     assert out_end_row == end_row
     assert out_start_column == start_column
     assert out_end_column == end_column
+
+
+@pytest.mark.parametrize(['unit', 'unit_nr', 'cell_nr', 'expected_row', 'expected_column'],
+                         [('row', 1, 5, 1, 5), ('column', 1, 5, 5, 1),
+                          ('box', 0, 1, 0, 1), ('box', 1, 4, 1, 4), ('box', 2, 3, 1, 6),
+                          ('box', 3, 6, 5, 0), ('box', 4, 0, 3, 3), ('box', 5, 5, 4, 8)])
+def test_get_pos_from_unit_nr(unit, unit_nr, cell_nr, expected_row, expected_column):
+    out_pos_row, out_pos_column = sudokuutils.get_pos_from_unit_nr(unit=unit,
+                                                                   unit_nr=unit_nr,
+                                                                   cell_nr=cell_nr)
+    assert out_pos_row == expected_row
+    assert out_pos_column == expected_column
