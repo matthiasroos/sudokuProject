@@ -95,7 +95,7 @@ def test_integrationtest_naked_singles(mock_sudoku_load):
 
 
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_singles.txt')], indirect=True)
-def test_integrationtest_hidden_singles(mock_sudoku_load):
+def test_integrationtest_hidden_singles_box(mock_sudoku_load):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
     sudoku_strategy = strategies.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
@@ -107,3 +107,15 @@ def test_integrationtest_hidden_singles(mock_sudoku_load):
     assert capturedOutput.getvalue() == 'Hidden Single 6 found in box 4\n' \
                                         'Hidden Single 7 found in box 8\n'
 
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_singles.txt')], indirect=True)
+def test_integrationtest_hidden_singles_column(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
+                                                              candidates=mock_sudoku_load.candidates,
+                                                              constraints=mock_sudoku_load.constraints,
+                                                              unit='column')
+    sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Hidden Single 6 found in column 3\n'

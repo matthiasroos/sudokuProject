@@ -19,9 +19,9 @@ class HiddenSingles:
 
     def detect(self):
         for i in range(0, 9):
-            candidates_statistic = {i: 0 for i in range(1, 10)}
-            box = self.candidates.get_unit(unit=self.unit, num=i)
-            for cell in box:
+            candidates_statistic = {j: 0 for j in range(1, 10)}
+            unit = self.candidates.get_unit(unit=self.unit, num=i)
+            for cell in unit:
                 if cell:
                     for entry in cell:
                         candidates_statistic[entry] = candidates_statistic[entry] + 1
