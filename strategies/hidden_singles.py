@@ -1,24 +1,14 @@
 
 from typing import Dict, List
 
-import sudokuboard
-import sudokucandidates
-import sudokuconstraints
+import strategies.abstractstrategy
 import sudokuutils
 
 
-class HiddenSingles:
+class HiddenSingles(strategies.abstractstrategy.AbstractStrategy):
 
-    def __init__(self,
-                 sudoku: sudokuboard.SudokuBoard,
-                 candidates: sudokucandidates.SudokuCandidates,
-                 constraints: sudokuconstraints.SudokuConstraints,
-                 unit: str):
-
-        self.board = sudoku
-        self.candidates = candidates
-        self.constraints = constraints
-        self.unit = unit
+    def __init__(self, sudoku, candidates, constraints, unit):
+        super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
 
     def detect(self) -> List[Dict]:
         found = []
