@@ -1,4 +1,3 @@
-
 import io
 import sys
 import unittest.mock
@@ -8,6 +7,7 @@ import pytest
 import solver.backtracking.backtracking
 import solver.backtracking.backtracking2
 import strategies.hidden_singles
+import strategies.naked_pairs
 import strategies.naked_singles
 import sudokumain
 
@@ -122,3 +122,17 @@ def test_integrationtest_hidden_singles_column(mock_sudoku_load):
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Hidden Single 6 found in column 3\n'
     assert output_found == [{6: (4, 3)}]
+
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='naked_pairs.txt')], indirect=True)
+def test_integrationtest_naked_pairs_box(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.naked_pairs.NakedPairs(sudoku=mock_sudoku_load.sudoku,
+                                                        candidates=mock_sudoku_load.candidates,
+                                                        constraints=mock_sudoku_load.constraints,
+                                                        unit='box')
+    output_found = sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Naked Pair (2, 4) found in box 1\n'
+    assert output_found == [{(2, 4): [(2, 3), (2, 5)]}]
