@@ -140,7 +140,7 @@ def test_integrationtest_naked_pairs_box(mock_sudoku_load):
 
 
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='naked_pairs.txt')], indirect=True)
-def test_integrationtest_naked_pairs_collection(mock_sudoku_load):
+def test_integrationtest_naked_pairs_collection0(mock_sudoku_load):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
     sudoku_strategy = strategies.collectionstrategy.CollectionStrategy(sudoku=mock_sudoku_load.sudoku,
@@ -152,4 +152,25 @@ def test_integrationtest_naked_pairs_collection(mock_sudoku_load):
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Naked Pair (2, 4) found in row 2\n' \
                                         'Naked Pair (2, 4) found in box 1\n'
-    assert output_found == [{(2, 4): [(2, 3), (2, 5)]}]
+    assert output_found == [{'row': [{(2, 4): [(2, 3), (2, 5)]}]},
+                            {'column': []},
+                            {'box': [{(2, 4): [(2, 3), (2, 5)]}]}]
+
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='naked_pairs2.txt')], indirect=True)
+def test_integrationtest_naked_pairs_collection1(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.collectionstrategy.CollectionStrategy(sudoku=mock_sudoku_load.sudoku,
+                                                                       candidates=mock_sudoku_load.candidates,
+                                                                       constraints=mock_sudoku_load.constraints,
+                                                                       strategy='naked_pairs',
+                                                                       units=['row', 'column', 'box'])
+    output_found = sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Naked Pair (2, 7) found in row 6\n' \
+                                        'Naked Pair (1, 9) found in column 4\n' \
+                                        'Naked Pair (2, 7) found in box 6\n'
+    assert output_found == [{'row': [{(2, 7): [(6, 2), (6, 5)]}]},
+                            {'column': [{(1, 9): [(1, 4), (5, 4)]}]},
+                            {'box': [{(2, 7): [(6, 2), (8, 0)]}]}]

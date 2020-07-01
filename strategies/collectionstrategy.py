@@ -34,8 +34,7 @@ class CollectionStrategy:
         for unit in self.units:
             instance = class_(sudoku=self.sudoku, candidates=self.candidates, constraints=self.constraints, unit=unit)
             found_from_unit = instance.detect()
-            found.extend(found_from_unit)
-        # TODO: find duplicates in found
+            found.append({unit: found_from_unit})
         return found
 
 
