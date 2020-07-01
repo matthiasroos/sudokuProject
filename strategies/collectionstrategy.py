@@ -9,7 +9,10 @@ modules = {'naked_singles': {'module': 'naked_singles',
            'hidden_singles': {'module': 'hidden_singles',
                               'class': 'HiddenSingles'},
            'naked_pairs': {'module': 'naked_pairs',
-                           'class': 'NakedPairs'}}
+                           'class': 'NakedPairs'},
+           'hidden_pairs': {'module': 'hidden_pairs',
+                            'class': 'HiddenPairs'}
+           }
 
 
 class CollectionStrategy:
