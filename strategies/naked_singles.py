@@ -10,18 +10,20 @@ class NakedSingles(strategies.abstractstrategy.AbstractStrategy):
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
 
-    def detect(self) -> List[Dict]:
+    def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
+        if len(cell) == 1:
+            num = next(iter(cell))
+            pos_row, pos_column = sudokuutils.get_pos_from_unit_nr(unit=self.unit,
+                                                                   unit_nr=unit_nr,
+                                                                   cell_nr=cell_nr)
+            analysis_dict[num] = (pos_row, pos_column)
+        return analysis_dict
+
+    def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         found = []
-        for unit_nr in range(0, 9):
-            unit = self.candidates.get_unit(unit=self.unit, num=unit_nr)
-            for cell_nr, cell in enumerate(unit):
-                if len(cell) == 1:
-                    num = next(iter(cell))
-                    print('Naked Single {num} found in {unit_name} {unit_nr}'.format(num=num,
-                                                                                     unit_name=self.unit,
-                                                                                     unit_nr=unit_nr))
-                    pos_row, pos_column = sudokuutils.get_pos_from_unit_nr(unit=self.unit,
-                                                                           unit_nr=unit_nr,
-                                                                           cell_nr=cell_nr)
-                    found.append({num: (pos_row, pos_column)})
+        for number, loc in analysis_dict.items():
+            print('Naked Single {number} found in {unit_name} {unit_nr}'.format(number=number,
+                                                                                unit_name=self.unit,
+                                                                                unit_nr=unit_nr))
+            found.append({number: loc})
         return found

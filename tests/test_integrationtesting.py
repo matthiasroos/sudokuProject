@@ -178,18 +178,18 @@ def test_integrationtest_naked_pairs_collection1(mock_sudoku_load):
 
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_pairs.txt')], indirect=True)
 def test_integrationtest_hidden_pairs_collection(mock_sudoku_load):
-    #capturedOutput = io.StringIO()
-    #sys.stdout = capturedOutput
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
     sudoku_strategy = strategies.collectionstrategy.CollectionStrategy(sudoku=mock_sudoku_load.sudoku,
                                                                        candidates=mock_sudoku_load.candidates,
                                                                        constraints=mock_sudoku_load.constraints,
                                                                        strategy='hidden_pairs',
                                                                        units=['row', 'column', 'box'])
     output_found = sudoku_strategy.detect()
-    #sys.stdout = sys.__stdout__
-    #assert capturedOutput.getvalue() == 'Naked Pair (2, 7) found in row 6\n' \
-     #                                   'Naked Pair (1, 9) found in column 4\n' \
-     #                                   'Naked Pair (2, 7) found in box 6\n'
-    #assert output_found == [{'row': [{(2, 7): [(6, 2), (6, 5)]}]},
-     #                       {'column': [{(1, 9): [(1, 4), (5, 4)]}]},
-     #                       {'box': [{(2, 7): [(6, 2), (8, 0)]}]}]
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Hidden Pair (5, 6) found in row 3\n' \
+                                        'Hidden Pair (5, 6) found in row 6\n' \
+                                        'Hidden Pair (3, 6) found in box 5\n'
+    assert output_found == [{'row': [{(5, 6): [(3, 4), (3, 5)]}, {(5, 6): [(6, 5), (6, 7)]} ]},
+                            {'column': []},
+                            {'box': [{(3, 6): [(5, 7), (5, 8)]}]}]
