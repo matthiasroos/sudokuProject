@@ -45,4 +45,3 @@ class SudokuAbstract:
             return self._get_column(pos_column=num)
         if unit == 'box':
             return self._get_box(box_num=num)
-

@@ -176,7 +176,6 @@ def test_integrationtest_naked_pairs_collection1(mock_sudoku_load):
                             {'box': [{(2, 7): [(6, 2), (8, 0)]}]}]
 
 
-
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_pairs.txt')], indirect=True)
 def test_integrationtest_hidden_pairs_collection(mock_sudoku_load):
     #capturedOutput = io.StringIO()

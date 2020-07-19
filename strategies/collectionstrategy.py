@@ -39,5 +39,3 @@ class CollectionStrategy:
             found_from_unit = instance.detect()
             found.append({unit: found_from_unit})
         return found
-
-

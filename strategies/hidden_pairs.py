@@ -40,4 +40,3 @@ class HiddenPairs(strategies.abstractstrategy.AbstractStrategy):
                                                                     cell_nr=loc_list_1[1])
                             found.append({pair: [loc1, loc2]})
         return found
-
