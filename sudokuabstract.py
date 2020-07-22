@@ -1,5 +1,5 @@
 
-from typing import List
+from typing import List, Optional
 
 import sudokuutils
 
@@ -38,10 +38,11 @@ class SudokuAbstract:
                 box.append(self._abstract[row_index][column_index])
         return box
 
-    def get_unit(self, unit: str, num: int) -> List:
+    def get_unit(self, unit: str, num: int) -> Optional[List]:
         if unit == 'row':
             return self._get_row(pos_row=num)
         if unit == 'column':
             return self._get_column(pos_column=num)
         if unit == 'box':
             return self._get_box(box_num=num)
+        return None

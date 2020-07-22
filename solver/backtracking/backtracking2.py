@@ -1,5 +1,5 @@
 
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 import solver.backtracking.backtrackingabstract
 import sudokuboard
@@ -29,16 +29,12 @@ class BackTracking2(solver.backtracking.backtrackingabstract.BackTrackingAbstrac
                 if len(solution_vector) == self.max_trial_entries:
                     self.solution = solution
                     return True
-                else:
-                    if self.backtracking(step=step + 1, solution_vector=solution_vector):
-                        return True
-                    else:
-                        solution_vector.pop(-1)
+                if self.backtracking(step=step + 1, solution_vector=solution_vector):
+                    return True
+                solution_vector.pop(-1)
 
     def check_for_solution(self, solution_vector: List) -> Optional[sudokuboard.SudokuBoard]:
         board = sudokuboard.insert_solution_vector_into_board(solution_vector=solution_vector, board=self.board)
         if self.constraints.check_sudoku(board=board):
             return board
-        else:
-            return None
-
+        return None

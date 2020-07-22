@@ -24,7 +24,7 @@ class HiddenSingles(strategies.abstractstrategy.AbstractStrategy):
                 analysis_dict[entry]['loc_entries'].append((pos_row, pos_column))
         return analysis_dict
 
-    def evaluate_analysis_dict(self,  analysis_dict: Dict,  unit_nr: int) -> Optional[List]:
+    def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> Optional[List]:
         found = []
         for number, sub_dict in analysis_dict.items():
             if sub_dict['nr_entries'] == 1:

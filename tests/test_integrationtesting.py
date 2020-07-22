@@ -190,6 +190,6 @@ def test_integrationtest_hidden_pairs_collection(mock_sudoku_load):
     assert capturedOutput.getvalue() == 'Hidden Pair (5, 6) found in row 3\n' \
                                         'Hidden Pair (5, 6) found in row 6\n' \
                                         'Hidden Pair (3, 6) found in box 5\n'
-    assert output_found == [{'row': [{(5, 6): [(3, 4), (3, 5)]}, {(5, 6): [(6, 5), (6, 7)]} ]},
+    assert output_found == [{'row': [{(5, 6): [(3, 4), (3, 5)]}, {(5, 6): [(6, 5), (6, 7)]}]},
                             {'column': []},
                             {'box': [{(3, 6): [(5, 7), (5, 8)]}]}]

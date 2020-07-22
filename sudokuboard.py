@@ -1,6 +1,6 @@
 
 import copy
-from typing import Iterable, List, Set, Tuple
+from typing import List, Set
 
 import sudokuabstract
 import sudokuutils

@@ -1,5 +1,5 @@
 
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 import solver.backtracking.backtrackingabstract
 import sudokuboard
@@ -30,11 +30,13 @@ class BackTracking(solver.backtracking.backtrackingabstract.BackTrackingAbstract
             return True
         return False
 
-    def _first(self, solution_vector: List) -> Optional[List]:
+    @staticmethod
+    def _first(solution_vector: List) -> Optional[List]:
         solution_vector.append(1)
         return solution_vector
 
-    def _next(self, solution_vector: List) -> Optional[List]:
+    @staticmethod
+    def _next(solution_vector: List) -> Optional[List]:
         last_element = solution_vector.pop(-1)
         if last_element < 9:
             solution_vector.append(last_element + 1)
@@ -43,9 +45,3 @@ class BackTracking(solver.backtracking.backtrackingabstract.BackTrackingAbstract
 
     def _output(self, solution_vector: List):
         self.solution = sudokuboard.insert_solution_vector_into_board(solution_vector=solution_vector, board=self.board)
-
-
-
-
-
-

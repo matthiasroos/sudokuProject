@@ -22,7 +22,7 @@ class NakedPairs(strategies.abstractstrategy.AbstractStrategy):
                 analysis_dict[pair] = [(pos_row, pos_column)]
         return analysis_dict
 
-    def evaluate_analysis_dict(self, analysis_dict: Dict,  unit_nr: int) -> List:
+    def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         found = []
         for pair, locs in analysis_dict.items():
             if len(locs) == 2:

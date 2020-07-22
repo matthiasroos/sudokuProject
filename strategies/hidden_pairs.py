@@ -12,14 +12,14 @@ class HiddenPairs(strategies.abstractstrategy.AbstractStrategy):
 
     def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: Set, analysis_dict: Dict) -> Dict:
         if cell:
-            for nr in list(cell):
-                if analysis_dict.get(nr):
-                    analysis_dict[nr].append(cell_nr)
+            for number in list(cell):
+                if analysis_dict.get(number):
+                    analysis_dict[number].append(cell_nr)
                 else:
-                    analysis_dict[nr] = [cell_nr]
+                    analysis_dict[number] = [cell_nr]
         return analysis_dict
 
-    def evaluate_analysis_dict(self, analysis_dict: Dict,  unit_nr: int) -> List:
+    def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         found = []
         for nr_1, loc_list_1 in analysis_dict.items():
             if len(loc_list_1) != 2:

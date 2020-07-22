@@ -35,10 +35,6 @@ class SudokuMain:
         pass
 
 
-
-
-
-
 if __name__ == "__main__":
     main_sudoku = SudokuMain(file_name='sudoku.txt')
     # sudoku.print_sudoku()
@@ -52,6 +48,3 @@ if __name__ == "__main__":
     print(main_sudoku.sudoku.get_number_of_empty_cells())
     solver = solver.backtracking.backtracking.BackTracking(main_sudoku.sudoku)
     solver.run()
-
-
-

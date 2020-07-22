@@ -13,7 +13,7 @@ class BackTrackingAbstract(metaclass=abc.ABCMeta):
 
         self.solution = None
         self.max_trial_entries = self.board.get_number_of_empty_cells()
-        
+
         if constraints is None:
             self.constraints = sudokuconstraints.SudokuConstraints()
         else:
@@ -28,4 +28,3 @@ class BackTrackingAbstract(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def backtracking(self, step: int, solution_vector: List) -> bool:
         pass
-

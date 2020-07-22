@@ -13,6 +13,7 @@ class SudokuConstraints:
     def _init_constraints(constraints: str) -> List:
         if constraints == 'standard':
             return ['row', 'column', 'box']
+        return []
 
     def check_sudoku(self, board: sudokuboard.SudokuBoard) -> bool:
         def check_unit(unit: List) -> bool:
@@ -23,10 +24,9 @@ class SudokuConstraints:
         for constraint in self._constraints:
             for i in range(0, 9):
                 ac_unit = board.get_unit(unit=constraint, num=i)
+                if not ac_unit:
+                    return False
                 result = check_unit(unit=ac_unit)
                 if not result:
                     return False
         return True
-
-
-

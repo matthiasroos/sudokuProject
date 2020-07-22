@@ -1,5 +1,5 @@
 
-from typing import Iterable, List, Set, Tuple
+from typing import Iterable, List, Optional, Set, Tuple
 
 
 def invert_entries(input_: Iterable[int]):
@@ -26,7 +26,7 @@ def get_box_dimensions2(pos_row: int, pos_column: int) -> Tuple[Tuple[int, int],
     return (start_row, end_row), (start_column, end_column)
 
 
-def get_pos_from_unit_nr(unit: str, unit_nr: int, cell_nr: int) -> Tuple[int, int]:
+def get_pos_from_unit_nr(unit: str, unit_nr: int, cell_nr: int) -> Tuple[Optional[int], Optional[int]]:
     """
     Return the position depending on the unit
     :param unit: type of unit 'row', 'column', 'box'
@@ -42,3 +42,4 @@ def get_pos_from_unit_nr(unit: str, unit_nr: int, cell_nr: int) -> Tuple[int, in
         pos_row = (unit_nr // 3) * 3 + cell_nr // 3
         pos_column = (unit_nr % 3) * 3 + cell_nr % 3
         return pos_row, pos_column
+    return None, None

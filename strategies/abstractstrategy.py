@@ -1,6 +1,6 @@
 
 import abc
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Set
 
 import sudokuboard
 import sudokucandidates
@@ -30,15 +30,16 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
         for unit_nr in range(0, 9):
             analysis_dict = self.initialize_analysis_dict()
             unit = self.candidates.get_unit(unit=self.unit, num=unit_nr)
-            for cell_nr, cell in enumerate(unit):
-                analysis_dict = self.analyze_candidates(unit_nr=unit_nr,
-                                                        cell_nr=cell_nr,
-                                                        cell=cell,
-                                                        analysis_dict=analysis_dict)
+            if unit:
+                for cell_nr, cell in enumerate(unit):
+                    analysis_dict = self.analyze_candidates(unit_nr=unit_nr,
+                                                            cell_nr=cell_nr,
+                                                            cell=cell,
+                                                            analysis_dict=analysis_dict)
 
-            new_found = self.evaluate_analysis_dict(analysis_dict=analysis_dict, unit_nr=unit_nr)
-            if new_found:
-                found.extend(new_found)
+                new_found = self.evaluate_analysis_dict(analysis_dict=analysis_dict, unit_nr=unit_nr)
+                if new_found:
+                    found.extend(new_found)
         return found
 
     @staticmethod
@@ -56,8 +57,7 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
         :param analysis_dict: analysis dict
         :return: analysis dict with additional entries
         """
-        pass
 
     @abc.abstractmethod
-    def evaluate_analysis_dict(self, analysis_dict: Dict,  unit_nr: int) -> List:
+    def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         pass
