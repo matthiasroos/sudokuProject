@@ -12,7 +12,7 @@ class NakedSingles(strategies.abstractstrategy.AbstractStrategy):
 
     def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
         if len(cell) == 1:
-            num = next(iter(cell))
+            num = cell[0]
             pos_row, pos_column = sudokuutils.get_pos_from_unit_nr(unit=self.unit,
                                                                    unit_nr=unit_nr,
                                                                    cell_nr=cell_nr)

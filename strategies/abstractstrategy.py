@@ -32,6 +32,8 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
             unit = self.candidates.get_unit(unit=self.unit, num=unit_nr)
             if unit:
                 for cell_nr, cell in enumerate(unit):
+                    cell = list(cell)
+                    cell.sort()
                     analysis_dict = self.analyze_candidates(unit_nr=unit_nr,
                                                             cell_nr=cell_nr,
                                                             cell=cell,
@@ -47,13 +49,13 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
         return {}
 
     @abc.abstractmethod
-    def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: Set, analysis_dict: Dict) -> Dict:
+    def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
         """
         Analyze the candidate entries for one cell and write findings to analysis dict
 
         :param unit_nr:  number of the current unit
         :param cell_nr: number of the current cell in the unit
-        :param cell: set of candidates for the current cell
+        :param cell: sorted list of candidates for the current cell
         :param analysis_dict: analysis dict
         :return: analysis dict with additional entries
         """

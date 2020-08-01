@@ -10,9 +10,9 @@ class NakedPairs(strategies.abstractstrategy.AbstractStrategy):
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
 
-    def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: Set, analysis_dict: Dict) -> Dict:
+    def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
         if len(cell) == 2:
-            pair = tuple(nr for nr in list(cell))
+            pair = tuple(nr for nr in cell)
             pos_row, pos_column = sudokuutils.get_pos_from_unit_nr(unit=self.unit,
                                                                    unit_nr=unit_nr,
                                                                    cell_nr=cell_nr)
