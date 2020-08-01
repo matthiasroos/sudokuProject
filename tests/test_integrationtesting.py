@@ -35,7 +35,7 @@ SOLUTION = [[7, 9, 2, 5, 3, 8, 6, 4, 1],
 
 @pytest.fixture
 def mock_sudoku_main():
-    with unittest.mock.patch('builtins.open', unittest.mock.mock_open(read_data=SUDOKU), create=True) as mocked_open:
+    with unittest.mock.patch('builtins.open', unittest.mock.mock_open(read_data=SUDOKU), create=True):
         mock_main = sudokumain.SudokuMain(file_name='test')
     return mock_main
 
@@ -176,6 +176,27 @@ def test_integrationtest_naked_pairs_collection1(mock_sudoku_load):
                             {'box': [{(2, 7): [(6, 2), (8, 0)]}]}]
 
 
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='naked_triples.txt')], indirect=True)
+def test_integrationtest_naked_pairs_collection2(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.collectionstrategy.CollectionStrategy(sudoku=mock_sudoku_load.sudoku,
+                                                                       candidates=mock_sudoku_load.candidates,
+                                                                       constraints=mock_sudoku_load.constraints,
+                                                                       strategy='naked_pairs',
+                                                                       units=['row', 'column', 'box'])
+    output_found = sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Naked Pair (3, 7) found in row 5\n' \
+                                        'Naked Pair (3, 7) found in column 6\n' \
+                                        'Naked Pair (3, 7) found in box 5\n' \
+                                        'Naked Pair (3, 7) found in box 8\n'
+    assert output_found == [{'row': [{(3, 7): [(5, 7), (5, 8)]}]},
+                            {'column': [{(3, 7): [(6, 6), (7, 6)]}]},
+                            {'box': [{(3, 7): [(5, 7), (5, 8)]},
+                                     {(3, 7): [(6, 6), (7, 6)]}]}]
+
+
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_pairs.txt')], indirect=True)
 def test_integrationtest_hidden_pairs_collection(mock_sudoku_load):
     capturedOutput = io.StringIO()
@@ -193,3 +214,25 @@ def test_integrationtest_hidden_pairs_collection(mock_sudoku_load):
     assert output_found == [{'row': [{(5, 6): [(3, 4), (3, 5)]}, {(5, 6): [(6, 5), (6, 7)]}]},
                             {'column': []},
                             {'box': [{(3, 6): [(5, 7), (5, 8)]}]}]
+
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='naked_triples.txt')], indirect=True)
+def test_integrationtest_naked_triples_collection(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.collectionstrategy.CollectionStrategy(sudoku=mock_sudoku_load.sudoku,
+                                                                       candidates=mock_sudoku_load.candidates,
+                                                                       constraints=mock_sudoku_load.constraints,
+                                                                       strategy='naked_triples',
+                                                                       units=['row', 'column', 'box'])
+    output_found = sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Naked triple {1, 3, 4} found in row 0\n' \
+                                        'Naked triple {3, 7, 8} found in row 6\n' \
+                                        'Naked triple {3, 4, 7} found in column 7\n' \
+                                        'Naked triple {1, 3, 7} found in column 8\n'
+    assert output_found == [{'row': [[{(1, 4): [(0, 3)]}, {(3, 4): [(0, 7)]}, {(1, 3): [(0, 8)]}],
+                                     [{(3, 7, 8): [(6, 0)]}, {(7, 8): [(6, 2)]}, {(3, 7): [(6, 6)]}]]},
+                            {'column': [[{(3, 4): [(0, 7)]}, {(3, 4, 7): [(2, 7)]}, {(3, 7): [(5, 7)]}],
+                                        [{(1, 3): [(0, 8)]}, {(1, 3, 7): [(1, 8)]}, {(3, 7): [(5, 8)]}]]},
+                            {'box': []}]
