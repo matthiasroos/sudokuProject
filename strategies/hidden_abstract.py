@@ -18,8 +18,3 @@ class HiddenAbstract(strategies.abstractstrategy.AbstractStrategy):
                 else:
                     analysis_dict[number] = [cell_nr]
         return analysis_dict
-
-    def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> Optional[List]:
-        found = []
-
-        return found
