@@ -37,6 +37,12 @@ class SudokuBoard(sudokuabstract.SudokuAbstract):
         self.board[pos_row][pos_column] = number
 
     def get_row_entries(self, pos_row) -> Set[int]:
+        """
+        Get entries for a row as a set.
+
+        :param pos_row: number of the row (0-8)
+        :return: set containing the entries of the row (value always None)
+        """
         return {entry for entry in self.board[pos_row] if entry != 0}
 
     def get_column_entries(self, pos_column) -> Set[int]:

@@ -6,7 +6,9 @@ import sudokuutils
 
 @pytest.mark.parametrize(['input_', 'expected_set'],
                          [([1, 2, 3, 4], {5, 6, 7, 8, 9}), ({1}, {2, 3, 4, 5, 6, 7, 8, 9}),
-                          ([], {1, 2, 3, 4, 5, 6, 7, 8, 9}), ((5, 6, 7), {1, 2, 3, 4, 8, 9})])
+                          ([], {1, 2, 3, 4, 5, 6, 7, 8, 9}), ((5, 6, 7), {1, 2, 3, 4, 8, 9}),
+                          ({5, 6, 3}, {1, 2, 4, 7, 8, 9}),
+                          ({1: None, 2: None, 8: None}, {3, 4, 5, 6, 7, 9})])
 def test_invert_entries(input_, expected_set):
     output_set = sudokuutils.invert_entries(input_=input_)
     assert output_set == expected_set

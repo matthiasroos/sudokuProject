@@ -1,3 +1,4 @@
+
 import pytest
 
 import sudokuboard
@@ -6,7 +7,7 @@ import sudokuboard
 @pytest.fixture
 def mock_board():
     sudoku = sudokuboard.SudokuBoard()
-    sudoku.board = [
+    sudoku._abstract = [
         [0, 0, 0, 2, 0, 0, 9, 0, 1],
         [2, 0, 3, 0, 0, 9, 5, 4, 0],
         [8, 0, 0, 0, 0, 0, 2, 0, 0],
@@ -33,3 +34,8 @@ def test_get_column(mock_board):
 def test_get_box(mock_board):
     output_box = mock_board._get_box(box_num=0)
     assert output_box == [0, 0, 0, 2, 0, 3, 8, 0, 0]
+
+
+def test_get_row_entries(mock_board):
+    output_row_entries = mock_board.get_row_entries(pos_row=1)
+    assert output_row_entries == {2, 3, 4, 5, 9}
