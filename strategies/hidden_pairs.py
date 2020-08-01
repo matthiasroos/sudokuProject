@@ -1,23 +1,14 @@
 
-from typing import Dict, List, Set
+from typing import Dict, List
 
-import strategies.abstractstrategy
+import strategies.hidden_abstract
 import sudokuutils
 
 
-class HiddenPairs(strategies.abstractstrategy.AbstractStrategy):
+class HiddenPairs(strategies.hidden_abstract.HiddenAbstract):
 
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
-
-    def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
-        if cell:
-            for number in cell:
-                if analysis_dict.get(number):
-                    analysis_dict[number].append(cell_nr)
-                else:
-                    analysis_dict[number] = [cell_nr]
-        return analysis_dict
         self._strategy_name = 'Hidden Pair'
 
     def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
