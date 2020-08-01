@@ -227,10 +227,10 @@ def test_integrationtest_naked_triples_collection(mock_sudoku_load):
                                                                        units=['row', 'column', 'box'])
     output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
-    assert capturedOutput.getvalue() == 'Naked triple {1, 3, 4} found in row 0\n' \
-                                        'Naked triple {3, 7, 8} found in row 6\n' \
-                                        'Naked triple {3, 4, 7} found in column 7\n' \
-                                        'Naked triple {1, 3, 7} found in column 8\n'
+    assert capturedOutput.getvalue() == 'Naked triple (1, 3, 4) found in row 0\n' \
+                                        'Naked triple (3, 7, 8) found in row 6\n' \
+                                        'Naked triple (3, 4, 7) found in column 7\n' \
+                                        'Naked triple (1, 3, 7) found in column 8\n'
     assert output_found == [{'row': [[{(1, 4): [(0, 3)]}, {(3, 4): [(0, 7)]}, {(1, 3): [(0, 8)]}],
                                      [{(3, 7, 8): [(6, 0)]}, {(7, 8): [(6, 2)]}, {(3, 7): [(6, 6)]}]]},
                             {'column': [[{(3, 4): [(0, 7)]}, {(3, 4, 7): [(2, 7)]}, {(3, 7): [(5, 7)]}],

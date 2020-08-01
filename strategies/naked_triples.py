@@ -37,14 +37,15 @@ class NakedTriples(strategies.abstractstrategy.AbstractStrategy):
             analysis_list = list(analysis_dict.keys())
             combinations = itertools.combinations(range(size), 3)
             for combination in list(combinations):
-                possible_triple = set()
+                possible_triple_set = set()
                 for nr in combination:
                     for item in analysis_list[nr]:
-                        possible_triple.add(item)
-                if len(possible_triple) == 3:
-                    print('Naked triple {num} found in {unit_name} {unit_nr}'.format(num=possible_triple,
-                                                                                     unit_name=self.unit,
-                                                                                     unit_nr=unit_nr))
+                        possible_triple_set.add(item)
+                if len(possible_triple_set) == 3:
+                    possible_triple = tuple(number for number in sorted(list(possible_triple_set)))
+                    print('Naked triple {triple} found in {unit_name} {unit_nr}'.format(triple=possible_triple,
+                                                                                        unit_name=self.unit,
+                                                                                        unit_nr=unit_nr))
 
                     result_entry = [{analysis_list[nr]: analysis_dict[analysis_list[nr]]} for nr in combination]
                     result.append(result_entry)
