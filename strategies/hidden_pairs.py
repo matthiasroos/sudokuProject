@@ -18,6 +18,7 @@ class HiddenPairs(strategies.abstractstrategy.AbstractStrategy):
                 else:
                     analysis_dict[number] = [cell_nr]
         return analysis_dict
+        self._strategy_name = 'Hidden Pair'
 
     def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         found = []
@@ -28,9 +29,7 @@ class HiddenPairs(strategies.abstractstrategy.AbstractStrategy):
                 if nr_1 < nr_2:
                     if loc_list_1 == loc_list_2:
                         pair = (nr_1, nr_2)
-                        print('Hidden Pair {pair} found in {unit_name} {unit_nr}'.format(pair=pair,
-                                                                                         unit_name=self.unit,
-                                                                                         unit_nr=unit_nr))
+                        self.print_found_strategy(numbers=pair, unit_nr=unit_nr)
                         loc1 = sudokuutils.get_pos_from_unit_nr(unit=self.unit,
                                                                 unit_nr=unit_nr,
                                                                 cell_nr=loc_list_1[0])

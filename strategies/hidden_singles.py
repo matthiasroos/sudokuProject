@@ -23,12 +23,12 @@ class HiddenSingles(strategies.abstractstrategy.AbstractStrategy):
                                                                        cell_nr=cell_nr)
                 analysis_dict[entry]['loc_entries'].append((pos_row, pos_column))
         return analysis_dict
+        self._strategy_name = 'Hidden Single'
 
     def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> Optional[List]:
         found = []
         for number, sub_dict in analysis_dict.items():
             if sub_dict['nr_entries'] == 1:
-                print('Hidden Single {num} found in {unit_name} {unit_nr}'.format(num=number, unit_name=self.unit,
-                                                                                  unit_nr=unit_nr))
                 found.append({number: sub_dict['loc_entries'][0]})
+                self.print_found_strategy(numbers=number, unit_nr=unit_nr)
         return found

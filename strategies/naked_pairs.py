@@ -9,6 +9,7 @@ class NakedPairs(strategies.abstractstrategy.AbstractStrategy):
 
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
+        self._strategy_name = 'Naked Pair'
 
     def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
         if len(cell) == 2:
@@ -26,7 +27,6 @@ class NakedPairs(strategies.abstractstrategy.AbstractStrategy):
         found = []
         for pair, locs in analysis_dict.items():
             if len(locs) == 2:
-                print('Naked Pair {pair} found in {unit_name} {unit_nr}'.format(pair=pair, unit_name=self.unit,
-                                                                                unit_nr=unit_nr))
+                self.print_found_strategy(numbers=pair, unit_nr=unit_nr)
                 found.append({pair: locs})
         return found

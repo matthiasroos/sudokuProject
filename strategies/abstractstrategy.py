@@ -1,6 +1,6 @@
 
 import abc
-from typing import Dict, List, Set
+from typing import Dict, List, Tuple, Union
 
 import sudokuboard
 import sudokucandidates
@@ -19,6 +19,11 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
         self.candidates = candidates
         self.constraints = constraints
         self.unit = unit
+        self._strategy_name = None
+
+    @property
+    def strategy_name(self):
+        return self._strategy_name
 
     def detect(self) -> List[Dict]:
         """
@@ -63,3 +68,6 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         pass
+
+    def print_found_strategy(self, numbers: Union[int, Tuple[int]], unit_nr: int) -> None:
+        print(f'{self.strategy_name} {numbers} found in {self.unit} {unit_nr}')

@@ -1,6 +1,6 @@
 
 import itertools
-from typing import Dict, List, Set
+from typing import Dict, List, Tuple
 
 import strategies.abstractstrategy
 import sudokuutils
@@ -10,6 +10,7 @@ class NakedTriples(strategies.abstractstrategy.AbstractStrategy):
 
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
+        self._strategy_name = 'Naked Triple'
 
     def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
         if cell:
@@ -37,15 +38,13 @@ class NakedTriples(strategies.abstractstrategy.AbstractStrategy):
             analysis_list = list(analysis_dict.keys())
             combinations = itertools.combinations(range(size), 3)
             for combination in list(combinations):
-                possible_triple_set = set()
+                possible_triple = set()
                 for nr in combination:
                     for item in analysis_list[nr]:
-                        possible_triple_set.add(item)
-                if len(possible_triple_set) == 3:
-                    possible_triple = tuple(number for number in sorted(list(possible_triple_set)))
-                    print('Naked triple {triple} found in {unit_name} {unit_nr}'.format(triple=possible_triple,
-                                                                                        unit_name=self.unit,
-                                                                                        unit_nr=unit_nr))
+                        possible_triple.add(item)
+                if len(possible_triple) == 3:
+                    triple: Tuple[int] = tuple(number for number in sorted(list(possible_triple)))
+                    self.print_found_strategy(numbers=triple, unit_nr=unit_nr)
 
                     result_entry = [{analysis_list[nr]: analysis_dict[analysis_list[nr]]} for nr in combination]
                     result.append(result_entry)

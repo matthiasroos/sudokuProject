@@ -9,6 +9,7 @@ class NakedSingles(strategies.abstractstrategy.AbstractStrategy):
 
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
+        self._strategy_name = 'Naked Single'
 
     def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
         if len(cell) == 1:
@@ -22,8 +23,6 @@ class NakedSingles(strategies.abstractstrategy.AbstractStrategy):
     def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         found = []
         for number, loc in analysis_dict.items():
-            print('Naked Single {number} found in {unit_name} {unit_nr}'.format(number=number,
-                                                                                unit_name=self.unit,
-                                                                                unit_nr=unit_nr))
+            self.print_found_strategy(numbers=number, unit_nr=unit_nr)
             found.append({number: loc})
         return found
