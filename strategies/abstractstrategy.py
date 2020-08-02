@@ -37,12 +37,13 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
             unit = self.candidates.get_unit(unit=self.unit, num=unit_nr)
             if unit:
                 for cell_nr, cell in enumerate(unit):
-                    cell = list(cell)
-                    cell.sort()
-                    analysis_dict = self.analyze_candidates(unit_nr=unit_nr,
-                                                            cell_nr=cell_nr,
-                                                            cell=cell,
-                                                            analysis_dict=analysis_dict)
+                    if cell:
+                        cell = list(cell)
+                        cell.sort()
+                        analysis_dict = self.analyze_candidates(unit_nr=unit_nr,
+                                                                cell_nr=cell_nr,
+                                                                cell=cell,
+                                                                analysis_dict=analysis_dict)
 
                 new_found = self.evaluate_analysis_dict(analysis_dict=analysis_dict, unit_nr=unit_nr)
                 if new_found:
@@ -57,6 +58,7 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
     def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
         """
         Analyze the candidate entries for one cell and write findings to analysis dict
+        Only called if a cell contains anything
 
         :param unit_nr:  number of the current unit
         :param cell_nr: number of the current cell in the unit
