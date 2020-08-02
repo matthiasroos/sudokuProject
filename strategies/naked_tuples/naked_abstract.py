@@ -35,12 +35,12 @@ class NakedAbstract(strategies.abstractstrategy.AbstractStrategy):
             # create all possible combinations of numbers
             combinations = itertools.combinations(range(size), tuple_size)
             for combination in list(combinations):
-                possible_quadruple = set()
+                possible_tuple = set()
                 for nr in combination:
                     for item in analysis_list[nr]:
-                        possible_quadruple.add(item)
-                if len(possible_quadruple) == tuple_size:
-                    triple: Tuple[int] = tuple(number for number in sorted(list(possible_quadruple)))
+                        possible_tuple.add(item)
+                if len(possible_tuple) == tuple_size:
+                    triple: Tuple[int] = tuple(number for number in sorted(list(possible_tuple)))
                     self.print_found_strategy(numbers=triple, unit_nr=unit_nr)
 
                     found_entry = {analysis_list[nr]: analysis_dict[analysis_list[nr]] for nr in combination}
