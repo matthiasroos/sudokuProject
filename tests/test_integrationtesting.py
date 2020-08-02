@@ -93,7 +93,7 @@ def test_integrationtest_naked_singles(mock_sudoku_load):
     assert capturedOutput.getvalue() == 'Naked Single 8 found in box 0\n' \
                                         'Naked Single 7 found in box 3\n' \
                                         'Naked Single 3 found in box 6\n'
-    assert output_found == [{8: (0, 0)}, {7: (5, 2)}, {3: (6, 1)}]
+    assert output_found == [{8: [(0, 0)]}, {7: [(5, 2)]}, {3: [(6, 1)]}]
 
 
 @pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_singles.txt')], indirect=True)

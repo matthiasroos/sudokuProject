@@ -2,27 +2,20 @@
 import itertools
 from typing import Dict, List, Tuple
 
-import strategies.abstractstrategy
+import strategies.naked_tuples.naked_abstract
 import sudokuutils
 
 
-class NakedQuartet(strategies.abstractstrategy.AbstractStrategy):
+class NakedQuartet(strategies.naked_tuples.naked_abstract.NakedAbstract):
 
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)
         self._strategy_name = 'Naked Quartet'
 
-    def analyze_candidates(self, unit_nr: int, cell_nr: int, cell: List, analysis_dict: Dict) -> Dict:
-        if (len(cell) == 2) | (len(cell) == 3) | (len(cell) == 4):
-            tuple_ = tuple(nr for nr in cell)
-            pos_row, pos_column = sudokuutils.get_pos_from_unit_nr(unit=self.unit,
-                                                                   unit_nr=unit_nr,
-                                                                   cell_nr=cell_nr)
-            if analysis_dict.get(tuple_):
-                analysis_dict[tuple_].append((pos_row, pos_column))
-            else:
-                analysis_dict[tuple_] = [(pos_row, pos_column)]
-        return analysis_dict
+    def check_cell_length(self, cell: List) -> bool:
+        if (len(cell) == 2) or (len(cell) == 3) or (len(cell) == 4):
+            return True
+        return False
 
     def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         """
