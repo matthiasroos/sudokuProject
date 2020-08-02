@@ -3,7 +3,6 @@ import itertools
 from typing import Dict, List, Tuple
 
 import strategies.naked_tuples.naked_abstract
-import sudokuutils
 
 
 class NakedTriples(strategies.naked_tuples.naked_abstract.NakedAbstract):

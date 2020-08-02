@@ -2,7 +2,6 @@
 from typing import Dict, List, Set
 
 import strategies.naked_tuples.naked_abstract
-import sudokuutils
 
 
 class NakedPairs(strategies.naked_tuples.naked_abstract.NakedAbstract):

@@ -22,9 +22,9 @@ modules = {'naked_singles': {'folder': 'naked_tuples',
            'hidden_triples': {'folder': 'hidden_tuples',
                               'module': 'hidden_triples',
                               'class': 'HiddenTriples'},
-           'naked_quartets': {'folder': 'naked_tuples',
-                              'module': 'naked_quartets',
-                              'class': 'NakedQuartet'}
+           'naked_quadruples': {'folder': 'naked_tuples',
+                                'module': 'naked_quadruples',
+                                'class': 'NakedQuadruples'}
            }
 
 
