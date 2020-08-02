@@ -7,9 +7,9 @@ import pytest
 import solver.backtracking.backtracking
 import solver.backtracking.backtracking2
 import strategies.collectionstrategy
-import strategies.hidden_singles
-import strategies.naked_pairs
-import strategies.naked_singles
+import strategies.hidden_tuples.hidden_singles
+import strategies.naked_tuples.naked_pairs
+import strategies.naked_tuples.naked_singles
 import sudokumain
 
 SUDOKU = '7,9,0,0,3,8,0,0,1\n\
@@ -84,10 +84,10 @@ def test_integrationtest_backtracking2(mock_sudoku_main):
 def test_integrationtest_naked_singles(mock_sudoku_load):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
-    sudoku_strategy = strategies.naked_singles.NakedSingles(sudoku=mock_sudoku_load.sudoku,
-                                                            candidates=mock_sudoku_load.candidates,
-                                                            constraints=mock_sudoku_load.constraints,
-                                                            unit='box')
+    sudoku_strategy = strategies.naked_tuples.naked_singles.NakedSingles(sudoku=mock_sudoku_load.sudoku,
+                                                                         candidates=mock_sudoku_load.candidates,
+                                                                         constraints=mock_sudoku_load.constraints,
+                                                                         unit='box')
     output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Naked Single 8 found in box 0\n' \
@@ -100,10 +100,10 @@ def test_integrationtest_naked_singles(mock_sudoku_load):
 def test_integrationtest_hidden_singles_box(mock_sudoku_load):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
-    sudoku_strategy = strategies.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
-                                                              candidates=mock_sudoku_load.candidates,
-                                                              constraints=mock_sudoku_load.constraints,
-                                                              unit='box')
+    sudoku_strategy = strategies.hidden_tuples.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
+                                                                            candidates=mock_sudoku_load.candidates,
+                                                                            constraints=mock_sudoku_load.constraints,
+                                                                            unit='box')
     output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Hidden Single 6 found in box 4\n' \
@@ -115,10 +115,10 @@ def test_integrationtest_hidden_singles_box(mock_sudoku_load):
 def test_integrationtest_hidden_singles_column(mock_sudoku_load):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
-    sudoku_strategy = strategies.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
-                                                              candidates=mock_sudoku_load.candidates,
-                                                              constraints=mock_sudoku_load.constraints,
-                                                              unit='column')
+    sudoku_strategy = strategies.hidden_tuples.hidden_singles.HiddenSingles(sudoku=mock_sudoku_load.sudoku,
+                                                                            candidates=mock_sudoku_load.candidates,
+                                                                            constraints=mock_sudoku_load.constraints,
+                                                                            unit='column')
     output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Hidden Single 6 found in column 3\n'
@@ -129,10 +129,10 @@ def test_integrationtest_hidden_singles_column(mock_sudoku_load):
 def test_integrationtest_naked_pairs_box(mock_sudoku_load):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
-    sudoku_strategy = strategies.naked_pairs.NakedPairs(sudoku=mock_sudoku_load.sudoku,
-                                                        candidates=mock_sudoku_load.candidates,
-                                                        constraints=mock_sudoku_load.constraints,
-                                                        unit='box')
+    sudoku_strategy = strategies.naked_tuples.naked_pairs.NakedPairs(sudoku=mock_sudoku_load.sudoku,
+                                                                     candidates=mock_sudoku_load.candidates,
+                                                                     constraints=mock_sudoku_load.constraints,
+                                                                     unit='box')
     output_found = sudoku_strategy.detect()
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Naked Pair (2, 4) found in box 1\n'

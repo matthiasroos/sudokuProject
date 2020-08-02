@@ -2,11 +2,11 @@
 import itertools
 from typing import Dict, List, Tuple
 
-import strategies.hidden_abstract
+import strategies.hidden_tuples.hidden_abstract
 import sudokuutils
 
 
-class HiddenTriples(strategies.hidden_abstract.HiddenAbstract):
+class HiddenTriples(strategies.hidden_tuples.hidden_abstract.HiddenAbstract):
 
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)

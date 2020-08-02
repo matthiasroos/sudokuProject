@@ -1,11 +1,11 @@
 
 from typing import Dict, List, Optional
 
-import strategies.hidden_abstract
+import strategies.hidden_tuples.hidden_abstract
 import sudokuutils
 
 
-class HiddenSingles(strategies.hidden_abstract.HiddenAbstract):
+class HiddenSingles(strategies.hidden_tuples.hidden_abstract.HiddenAbstract):
 
     def __init__(self, sudoku, candidates, constraints, unit):
         super().__init__(sudoku=sudoku, candidates=candidates, constraints=constraints, unit=unit)

@@ -4,19 +4,26 @@ import sudokuboard
 import sudokucandidates
 import sudokuconstraints
 
-modules = {'naked_singles': {'module': 'naked_singles',
+modules = {'naked_singles': {'folder': 'naked_tuples',
+                             'module': 'naked_singles',
                              'class': 'NakedSingles'},
-           'hidden_singles': {'module': 'hidden_singles',
+           'hidden_singles': {'folder': 'hidden_tuples',
+                              'module': 'hidden_singles',
                               'class': 'HiddenSingles'},
-           'naked_pairs': {'module': 'naked_pairs',
+           'naked_pairs': {'folder': 'naked_tuples',
+                           'module': 'naked_pairs',
                            'class': 'NakedPairs'},
-           'hidden_pairs': {'module': 'hidden_pairs',
+           'hidden_pairs': {'folder': 'hidden_tuples',
+                            'module': 'hidden_pairs',
                             'class': 'HiddenPairs'},
-           'naked_triples': {'module': 'naked_triples',
+           'naked_triples': {'folder': 'naked_tuples',
+                             'module': 'naked_triples',
                              'class': 'NakedTriples'},
-           'hidden_triples': {'module': 'hidden_triples',
+           'hidden_triples': {'folder': 'hidden_tuples',
+                              'module': 'hidden_triples',
                               'class': 'HiddenTriples'},
-           'naked_quartets': {'module': 'naked_quartets',
+           'naked_quartets': {'folder': 'naked_tuples',
+                              'module': 'naked_quartets',
                               'class': 'NakedQuartet'}
            }
 
@@ -32,7 +39,7 @@ class CollectionStrategy:
         self.sudoku = sudoku
         self.candidates = candidates
         self.constraints = constraints
-        self.module_name = f"strategies.{modules[strategy]['module']}"
+        self.module_name = f"strategies.{modules[strategy]['folder']}.{modules[strategy]['module']}"
         self.class_name = modules[strategy]['class']
         self.units = units
 
