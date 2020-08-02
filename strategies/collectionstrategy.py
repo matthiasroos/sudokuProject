@@ -15,7 +15,9 @@ modules = {'naked_singles': {'module': 'naked_singles',
            'naked_triples': {'module': 'naked_triples',
                              'class': 'NakedTriples'},
            'hidden_triples': {'module': 'hidden_triples',
-                              'class': 'HiddenTriples'}
+                              'class': 'HiddenTriples'},
+           'naked_quartets': {'module': 'naked_quartets',
+                              'class': 'NakedQuartet'}
            }
 
 

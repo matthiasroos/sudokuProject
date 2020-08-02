@@ -258,3 +258,37 @@ def test_integrationtest_hidden_triples_collection(mock_sudoku_load):
                             {'column': []},
                             {'box': [[{(1, 2, 8): [(3, 3), (5, 5)], (1, 8): [(5, 4)]}],
                                      [{(2, 4, 5): [(6, 5), (8, 5)], (2, 5): [(8, 3)]}]]}]
+
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='naked_quartets.txt')], indirect=True)
+def test_integrationtest_naked_quartets_collection(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.collectionstrategy.CollectionStrategy(sudoku=mock_sudoku_load.sudoku,
+                                                                       candidates=mock_sudoku_load.candidates,
+                                                                       constraints=mock_sudoku_load.constraints,
+                                                                       strategy='naked_quartets',
+                                                                       units=['row', 'column', 'box'])
+    output_found = sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Naked Quartet (3, 4, 8, 9) found in row 4\n' \
+                                        'Naked Quartet (1, 3, 4, 5) found in row 5\n' \
+                                        'Naked Quartet (4, 5, 6, 8) found in row 7\n' \
+                                        'Naked Quartet (2, 3, 5, 8) found in column 4\n' \
+                                        'Naked Quartet (3, 4, 5, 8) found in column 5\n' \
+                                        'Naked Quartet (3, 4, 7, 9) found in column 7\n' \
+                                        'Naked Quartet (3, 4, 6, 7) found in column 8\n' \
+                                        'Naked Quartet (1, 3, 5, 8) found in box 4\n' \
+                                        'Naked Quartet (4, 5, 6, 8) found in box 6\n' \
+                                        'Naked Quartet (3, 4, 5, 8) found in box 7\n'
+    assert output_found == [
+        {'row': [{(3, 4, 8): [(4, 2)], (3, 4, 8, 9): [(4, 0)], (3, 4, 9): [(4, 7)], (3, 8): [(4, 3)]},
+                 {(1, 3, 4, 5): [(5, 0)], (1, 3, 5): [(5, 3)], (1, 4): [(5, 1)], (3, 4): [(5, 7)]},
+                 {(4, 5, 6, 8): [(7, 0)], (4, 5, 8): [(7, 2), (7, 3)], (4, 6, 8): [(7, 1)]}]},
+         {'column': [{(2, 3, 8): [(2, 4)], (2, 5): [(1, 4)], (3, 5): [(8, 4)], (3, 5, 8): [(6, 4)]},
+                     {(3, 4, 8): [(0, 5), (2, 5)], (3, 5, 8): [(3, 5)], (4, 5): [(1, 5)]},
+                     {(3, 4): [(5, 7)], (3, 4, 9): [(4, 7)], (3, 7, 9): [(3, 7)], (4, 7, 9): [(1, 7)]},
+                     {(3, 4, 6): [(0, 8), (2, 8)], (3, 6, 7): [(3, 8)], (4, 7): [(6, 8)]}]},
+        {'box': [{(1, 3, 5): [(5, 3)], (1, 3, 5, 8): [(3, 3)], (3, 5, 8): [(3, 5)], (3, 8): [(4, 3)]},
+                 {(4, 5, 6, 8): [(7, 0)], (4, 5, 8): [(7, 2)], (4, 6, 8): [(7, 1)], (4, 8): [(6, 1)]},
+                 {(3, 4, 5): [(8, 3)], (3, 5): [(8, 4)], (3, 5, 8): [(6, 4)],  (4, 5, 8): [(7, 3)]}]}]
