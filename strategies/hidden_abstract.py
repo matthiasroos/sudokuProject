@@ -2,7 +2,6 @@
 from typing import Dict, List, Optional
 
 import strategies.abstractstrategy
-import sudokuutils
 
 
 class HiddenAbstract(strategies.abstractstrategy.AbstractStrategy):
@@ -18,3 +17,6 @@ class HiddenAbstract(strategies.abstractstrategy.AbstractStrategy):
                 else:
                     analysis_dict[number] = [cell_nr]
         return analysis_dict
+
+    def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
+        pass

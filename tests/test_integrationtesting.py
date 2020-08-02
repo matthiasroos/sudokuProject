@@ -231,8 +231,28 @@ def test_integrationtest_naked_triples_collection(mock_sudoku_load):
                                         'Naked Triple (3, 7, 8) found in row 6\n' \
                                         'Naked Triple (3, 4, 7) found in column 7\n' \
                                         'Naked Triple (1, 3, 7) found in column 8\n'
-    assert output_found == [{'row': [[{(1, 4): [(0, 3)]}, {(3, 4): [(0, 7)]}, {(1, 3): [(0, 8)]}],
-                                     [{(3, 7, 8): [(6, 0)]}, {(7, 8): [(6, 2)]}, {(3, 7): [(6, 6)]}]]},
-                            {'column': [[{(3, 4): [(0, 7)]}, {(3, 4, 7): [(2, 7)]}, {(3, 7): [(5, 7)]}],
-                                        [{(1, 3): [(0, 8)]}, {(1, 3, 7): [(1, 8)]}, {(3, 7): [(5, 8)]}]]},
+    assert output_found == [{'row': [[{(1, 4): [(0, 3)], (3, 4): [(0, 7)], (1, 3): [(0, 8)]}],
+                                     [{(3, 7, 8): [(6, 0)], (7, 8): [(6, 2)], (3, 7): [(6, 6)]}]]},
+                            {'column': [[{(3, 4): [(0, 7)], (3, 4, 7): [(2, 7)], (3, 7): [(5, 7)]}],
+                                        [{(1, 3): [(0, 8)], (1, 3, 7): [(1, 8)], (3, 7): [(5, 8)]}]]},
                             {'box': []}]
+
+
+@pytest.mark.parametrize('mock_sudoku_load', [dict(file_name='hidden_triples.txt')], indirect=True)
+def test_integrationtest_hidden_triples_collection(mock_sudoku_load):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    sudoku_strategy = strategies.collectionstrategy.CollectionStrategy(sudoku=mock_sudoku_load.sudoku,
+                                                                       candidates=mock_sudoku_load.candidates,
+                                                                       constraints=mock_sudoku_load.constraints,
+                                                                       strategy='hidden_triples',
+                                                                       units=['row', 'column', 'box'])
+    output_found = sudoku_strategy.detect()
+    sys.stdout = sys.__stdout__
+    assert capturedOutput.getvalue() == 'Hidden Triple (4, 5, 7) found in row 4\n' \
+                                        'Hidden Triple (1, 2, 8) found in box 4\n' \
+                                        'Hidden Triple (2, 4, 5) found in box 7\n'
+    assert output_found == [{'row': [[{(4, 5): [(4, 6)], (4, 5, 7): [(4, 1)], (5, 7): [(4, 2)]}]]},
+                            {'column': []},
+                            {'box': [[{(1, 2, 8): [(3, 3), (5, 5)], (1, 8): [(5, 4)]}],
+                                     [{(2, 4, 5): [(6, 5), (8, 5)], (2, 5): [(8, 3)]}]]}]
