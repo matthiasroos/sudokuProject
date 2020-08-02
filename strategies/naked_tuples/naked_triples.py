@@ -1,5 +1,4 @@
 
-import itertools
 from typing import Dict, List, Tuple
 
 import strategies.naked_tuples.naked_abstract
@@ -24,21 +23,8 @@ class NakedTriples(strategies.naked_tuples.naked_abstract.NakedAbstract):
         :param unit_nr:
         :return:
         """
-        found = []
-        analysis_list = self.make_keys_to_list(analysis_dict=analysis_dict)
-        if (size := len(analysis_list)) >= 3:
-            # create all possible combinations of numbers
-            combinations = itertools.combinations(range(size), 3)
-            for combination in list(combinations):
-                possible_triple = set()
-                for nr in combination:
-                    for item in analysis_list[nr]:
-                        possible_triple.add(item)
-                if len(possible_triple) == 3:
-                    triple: Tuple[int] = tuple(number for number in sorted(list(possible_triple)))
-                    self.print_found_strategy(numbers=triple, unit_nr=unit_nr)
-
-                    found_entry = {analysis_list[nr]: analysis_dict[analysis_list[nr]] for nr in combination}
-                    found.append(found_entry)
+        found = self.evaluate_analysis_dict_for_higher_tuples(analysis_dict=analysis_dict,
+                                                              unit_nr=unit_nr,
+                                                              tuple_size=3)
 
         return found

@@ -1,5 +1,6 @@
 
 import abc
+import itertools
 from typing import Dict, List, Tuple
 
 import strategies.abstractstrategy
@@ -26,3 +27,23 @@ class NakedAbstract(strategies.abstractstrategy.AbstractStrategy):
     @abc.abstractmethod
     def check_cell_length(self, cell: List) -> bool:
         pass
+
+    def evaluate_analysis_dict_for_higher_tuples(self, analysis_dict: Dict, unit_nr: int, tuple_size: int) -> List:
+        found = []
+        analysis_list = self.make_keys_to_list(analysis_dict=analysis_dict)
+        if (size := len(analysis_list)) >= tuple_size:
+            # create all possible combinations of numbers
+            combinations = itertools.combinations(range(size), tuple_size)
+            for combination in list(combinations):
+                possible_quadruple = set()
+                for nr in combination:
+                    for item in analysis_list[nr]:
+                        possible_quadruple.add(item)
+                if len(possible_quadruple) == tuple_size:
+                    triple: Tuple[int] = tuple(number for number in sorted(list(possible_quadruple)))
+                    self.print_found_strategy(numbers=triple, unit_nr=unit_nr)
+
+                    found_entry = {analysis_list[nr]: analysis_dict[analysis_list[nr]] for nr in combination}
+                    found.append(found_entry)
+
+        return found
