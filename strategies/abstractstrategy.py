@@ -69,5 +69,20 @@ class AbstractStrategy(metaclass=abc.ABCMeta):
     def evaluate_analysis_dict(self, analysis_dict: Dict, unit_nr: int) -> List:
         pass
 
+    @staticmethod
+    def make_keys_to_list(analysis_dict: Dict) -> List:
+        analysis_list = []
+        for key, value in analysis_dict.items():
+            for _ in value:
+                analysis_list.append(key)
+        return analysis_list
+
+    @staticmethod
+    def len_analysis_dict(analysis_dict: Dict) -> int:
+        length = 0
+        for _, value in analysis_dict.items():
+            length = length + len(value)
+        return length
+
     def print_found_strategy(self, numbers: Union[int, Tuple[int]], unit_nr: int) -> None:
         print(f'{self.strategy_name} {numbers} found in {self.unit} {unit_nr}')

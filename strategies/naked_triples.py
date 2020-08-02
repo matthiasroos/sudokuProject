@@ -34,8 +34,8 @@ class NakedTriples(strategies.abstractstrategy.AbstractStrategy):
         :return:
         """
         found = []
-        if (size := len(analysis_dict)) >= 3:
-            analysis_list = list(analysis_dict.keys())
+        analysis_list = self.make_keys_to_list(analysis_dict=analysis_dict)
+        if (size := len(analysis_list)) >= 3:
             # create all possible combinations of numbers
             combinations = itertools.combinations(range(size), 3)
             for combination in list(combinations):
@@ -48,6 +48,6 @@ class NakedTriples(strategies.abstractstrategy.AbstractStrategy):
                     self.print_found_strategy(numbers=triple, unit_nr=unit_nr)
 
                     found_entry = {analysis_list[nr]: analysis_dict[analysis_list[nr]] for nr in combination}
-                    found.append([found_entry])
+                    found.append(found_entry)
 
         return found

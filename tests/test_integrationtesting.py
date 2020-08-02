@@ -229,12 +229,14 @@ def test_integrationtest_naked_triples_collection(mock_sudoku_load):
     sys.stdout = sys.__stdout__
     assert capturedOutput.getvalue() == 'Naked Triple (1, 3, 4) found in row 0\n' \
                                         'Naked Triple (3, 7, 8) found in row 6\n' \
+                                        'Naked Triple (1, 4, 7) found in column 3\n' \
                                         'Naked Triple (3, 4, 7) found in column 7\n' \
                                         'Naked Triple (1, 3, 7) found in column 8\n'
-    assert output_found == [{'row': [[{(1, 4): [(0, 3)], (3, 4): [(0, 7)], (1, 3): [(0, 8)]}],
-                                     [{(3, 7, 8): [(6, 0)], (7, 8): [(6, 2)], (3, 7): [(6, 6)]}]]},
-                            {'column': [[{(3, 4): [(0, 7)], (3, 4, 7): [(2, 7)], (3, 7): [(5, 7)]}],
-                                        [{(1, 3): [(0, 8)], (1, 3, 7): [(1, 8)], (3, 7): [(5, 8)]}]]},
+    assert output_found == [{'row': [{(1, 4): [(0, 3)], (3, 4): [(0, 7)], (1, 3): [(0, 8)]},
+                                     {(3, 7, 8): [(6, 0)], (7, 8): [(6, 2)], (3, 7): [(6, 6)]}]},
+                            {'column': [{(1, 4): [(0, 3)], (1, 4, 7): [(2, 3), (7, 3)]},
+                                        {(3, 4): [(0, 7)], (3, 4, 7): [(2, 7)], (3, 7): [(5, 7)]},
+                                        {(1, 3): [(0, 8)], (1, 3, 7): [(1, 8)], (3, 7): [(5, 8)]}]},
                             {'box': []}]
 
 
